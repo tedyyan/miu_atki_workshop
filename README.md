@@ -9,6 +9,10 @@ please start as following steps: (it's better to import the project in STS)
 5. VinUI
 6. springboot-admin-ea
 
+you can use swagger to invoke the API as well. input the vin number
+http://localhost:3211/swagger-ui.html#/
+
+```
 vincheckerMicroService and VinUI are the workshop project
 
 you could start mysql instance, or remove following configuration in config project
@@ -26,3 +30,4 @@ spring:
     admin:
       client:
         url: http://localhost:8180
+```
