@@ -1,0 +1,77 @@
+server:
+  port: 8060
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8061/eureka/
+
+logging:
+  pattern: 
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+              
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      - id: employee-service
+        uri: lb://employee-service
+        predicates:
+        - Path=/employee/**
+        filters:
+        
+      - id: department-service
+        uri: lb://department-service
+        predicates:
+        - Path=/department/**
+        filters:
+        
+      - id: organization-service
+        uri: lb://organization-service
+        predicates:
+        - Path=/organization/**
+        filters:
+        
+      - id: playlist-service
+        uri: lb://playlist-service
+        predicates:
+        - Path=/playlist/**
+        filters:  
+        - RewritePath=/playlist/(?<path>.*), /$\{path}
+      
+      - id: vinchecker-service
+        uri: lb://vinchecker-service
+        predicates:
+        - Path=/vinchecker/**
+        filters:  
+        - RewritePath=/vinchecker/(?<path>.*), /$\{path}
+        
+      - id: song-service
+        uri: lb://songs-service
+        predicates:
+        - Path=/songs/**
+        filters:  
+        - RewritePath=/songs/(?<path>.*), /$\{path}
+        
+      - id: account-service
+        uri: lb://account-service
+        predicates:
+        - Path=/account/**
+        filters:  
+        - RewritePath=/account/(?<path>.*), /$\{path}
+  boot:
+    admin:
+      client:
+        url: http://localhost:8180
+        
+management:
+  endpoint:
+    health:
+      show-details: ALWAYS
+  endpoints:
+    web:
+      exposure:
+        include: "*"
